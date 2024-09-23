@@ -1,0 +1,46 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+@argfile
+--module-path
+'E:/Coding/Java/PersistenceUtils/target/PersistenceUtils-0.6-RELEASE.jar'
+--patch-module
+PersistenceUtils='E:/Coding/Java/PersistenceUtils/src/main/java;E:/Coding/Java/PersistenceUtils/target/generated-sources/annotations'
+-encoding
+'UTF-8'
+-protected
+--release
+17
+--module-source-path
+'E:/Coding/Java/PersistenceUtils/target/reports/apidocs/src'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'E:/Coding/Java/PersistenceUtils/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Persistence Utils 0.6-RELEASE API'
+-use
+-version
+-windowtitle
+'Persistence Utils 0.6-RELEASE API'
+PersistencyUtils
+'E:/Coding/Java/PersistenceUtils/src/main/java/module-info.java'
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\allclasses-index.html = 1727109135861
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\allpackages-index.html = 1727109135876
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\element-list = 1727109135813
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\help-doc.html = 1727109135900
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\index-all.html = 1727109135892
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\index.html = 1727109135896
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\member-search-index.js = 1727109135876
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\module-search-index.js = 1727109135876
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\overview-tree.html = 1727109135861
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\package-search-index.js = 1727109135876
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\search.html = 1727109135894
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\tag-search-index.js = 1727109135876
+E:\Coding\Java\PersistenceUtils\target\reports\apidocs\type-search-index.js = 1727109135876
