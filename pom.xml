@@ -13,10 +13,18 @@
     <groupId>io.github.blacknoize404</groupId>
     <artifactId>PersistenceUtils</artifactId>
     <version>0.6-RELEASE</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>Persistence Utils</name>
     <description>Un módulo más para proveer de persistencia.</description>
     <url>https://blacknoize404.github.io</url>
+
+    <properties>
+        <project.java.version>17</project.java.version>
+        <maven.compiler.source>${project.java.version}</maven.compiler.source>
+        <maven.compiler.target>${project.java.version}</maven.compiler.target>
+        <maven.compiler.release>${project.java.version}</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <licenses>
         <license>
@@ -34,11 +42,6 @@
         </developer>
     </developers>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -56,7 +59,7 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <release>${maven.compiler.release}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -114,5 +117,10 @@
             </plugin>
         </plugins>
     </build>
+    <scm>
+        <connection>scm:git:git://github.com/blacknoize404/PersistenceUtils.git</connection>
+        <developerConnection>scm:git:ssh://github.com:blacknoize404/PersistenceUtils.git</developerConnection>
+        <url>http://github.com/blacknoize404/PersistenceUtils/tree/master</url>
+    </scm>
 
 </project>
