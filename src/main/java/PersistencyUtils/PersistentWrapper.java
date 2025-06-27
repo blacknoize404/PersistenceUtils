@@ -1,4 +1,4 @@
-package PersistencyUtils;
+package persistencyutils;
 
 import java.io.*;
 
@@ -6,16 +6,16 @@ import java.io.*;
  * Guarda y carga datos persistentes para un tipo de objeto
  * específico y actúa de envoltorio para el mismo.
  *
- * @param <E> El tipo de dato genérico que debe extender de serializable
+ * @param <E> El tipo de dato genérico que debe extender Serializable
  * @author Barnés Inside
- * @version 0.6
+ * @version 0.7
  */
 public final class PersistentWrapper<E extends Serializable> {
 
     /**
      * La referencia al tipo de dato de la clase a serializar.
      */
-    private final Class<?> type;
+    private final Class<E> type;
 
     /**
      * El objeto en sí donde guardar o cargar datos desde y en el archivo.
@@ -28,59 +28,58 @@ public final class PersistentWrapper<E extends Serializable> {
     private final String location;
 
     /**
-     * <p>Constructor for PersistentWrapper.</p>
+     * Constructor para PersistentWrapper.
      *
-     * @param type La clase del dato a almacenar.
-     * @param location La dirección del archivo a guardar y/o cargar.
+     * @param type     Clase del dato a almacenar.
+     * @param location Dirección del archivo a guardar y/o cargar.
      */
-    public PersistentWrapper(Class<?> type, String location) {
+    public PersistentWrapper(Class<E> type, String location) {
         this.type = type;
         this.location = location;
     }
 
     /**
-     * <p>Constructor for PersistentWrapper.</p>
+     * Constructor para PersistentWrapper.
      *
-     * @param data Una instancia del dato a almacenar.
-     * @param type La clase del dato a almacenar.
-     * @param location La dirección del archivo a guardar y/o cargar.
+     * @param content  Instancia del dato a almacenar.
+     * @param type     Clase del dato a almacenar.
+     * @param location Dirección del archivo a guardar y/o cargar.
      */
-    public PersistentWrapper(E data, Class<?> type, String location) {
+    public PersistentWrapper(E data, Class<E> type, String location) {
         this.type = type;
         this.content = data;
         this.location = location;
     }
 
-
     /**
-     * <p>of.</p>
+     * Crea una instancia de PersistentWrapper.
      *
-     * @param type La clase del dato a almacenar.
-     * @param location La dirección del archivo a guardar y/o cargar.
-     * @param <E> a E class
-     * @return a {@link PersistencyUtils.PersistentWrapper} object
+     * @param type     Clase del dato a almacenar.
+     * @param location Dirección del archivo a guardar y/o cargar.
+     * @param <E>      Tipo de dato.
+     * @return Instancia de PersistentWrapper.
      */
-    public static <E extends Serializable> PersistentWrapper<E> of(Class<?> type, String location) {
+    public static <E extends Serializable> PersistentWrapper<E> of(Class<E> type, String location) {
         return new PersistentWrapper<>(type, location);
     }
 
     /**
-     * <p>of.</p>
+     * Crea una instancia de PersistentWrapper con contenido inicial.
      *
-     * @param data Una instancia del dato a almacenar.
-     * @param type La clase del dato a almacenar.
-     * @param location La dirección del archivo a guardar y/o cargar.
-     * @param <E> a E class
-     * @return a {@link PersistencyUtils.PersistentWrapper} object
+     * @param content  Instancia del dato a almacenar.
+     * @param type     Clase del dato a almacenar.
+     * @param location Dirección del archivo a guardar y/o cargar.
+     * @param <E>      Tipo de dato.
+     * @return Instancia de PersistentWrapper.
      */
-    public static <E extends Serializable> PersistentWrapper<E> of(E data, Class<?> type, String location) {
+    public static <E extends Serializable> PersistentWrapper<E> of(E data, Class<E> type, String location) {
         return new PersistentWrapper<>(data, type, location);
     }
 
     /**
      * Obtiene el contenido del objeto envuelto.
      *
-     * @return el objeto envuelto.
+     * @return El objeto envuelto.
      */
     public E getContent() {
         return content;
@@ -89,7 +88,7 @@ public final class PersistentWrapper<E extends Serializable> {
     /**
      * Asigna el contenido del objeto envuelto.
      *
-     * @param content a E object
+     * @param content Objeto a asignar.
      */
     public void setContent(E content) {
         this.content =  content;
@@ -97,32 +96,26 @@ public final class PersistentWrapper<E extends Serializable> {
 
     /**
      * Deserializa el objeto guardado en bytes desde el archivo definido.
-     * @throws IOException si ha ocurrido un error al leer el archivo
-     * @throws ClassNotFoundException si la clase a deserializar no es compatible con los datos del archivo
-     * @see #load()
+     *
+     * @throws IOException            Si ocurre un error al leer el archivo.
+     * @throws ClassNotFoundException Si la clase a deserializar no es compatible con los datos del archivo.
      */
-
-    @SuppressWarnings("unchecked")
     private void deserialize() throws IOException, ClassNotFoundException {
-
-        FileInputStream fileIn = new FileInputStream(location);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        Object object = in.readObject();
-        in.close();
-        fileIn.close();
-
-        content = (E) type.cast(object);
+        try (FileInputStream fileIn = new FileInputStream(location);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            Object object = in.readObject();
+            content = type.cast(object);
+        }
 
     }
 
 
     /**
-     * Alias de {@link #deserialize()}.
+     * Carga el contenido desde el archivo.
      *
-     * @throws java.io.IOException si ha ocurrido un error al leer el archivo
-     * @throws java.lang.ClassNotFoundException si la clase a deserializar no es compatible con los datos del archivo
-     * @see #deserialize()
-     * @return la instancia del {@code PersistentWrapper} que cargó los datos.
+     * @return Esta instancia de PersistentWrapper.
+     * @throws IOException            Si ocurre un error al leer el archivo.
+     * @throws ClassNotFoundException Si la clase a deserializar no es compatible con los datos del archivo.
      */
     public PersistentWrapper<E> load() throws IOException, ClassNotFoundException {
         deserialize();
@@ -130,26 +123,25 @@ public final class PersistentWrapper<E extends Serializable> {
     }
 
     /**
-     * Guarda el objeto en un archivo de forma serializada
-     * @throws IOException si ha ocurrido un error al escribir en el archivo
+     * Serializa y guarda el objeto en un archivo.
+     * 
+     * @throws IOException Si ocurre un error al escribir en el archivo o si el contenido es nulo.
      */
     private void serialize() throws IOException {
-
-        FileOutputStream fileOut = new FileOutputStream(location);
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-
-        if (content == null) throw new IOException("El contenido no puede ser nulo");
-
-        out.writeObject(content);
-        out.close();
-        fileOut.close();
+        if (content == null) {
+            throw new IOException("El contenido no puede ser nulo");
+        }
+        try (FileOutputStream fileOut = new FileOutputStream(location);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(content);
+        }
 
     }
 
     /**
      * Alias de {@link #serialize()}.
      *
-     * @throws java.io.IOException si ha ocurrido un error al guardar el archivo
+     * @throws IOException Si ocurre un error al guardar el archivo.
      * @see #serialize()
      */
     public void save() throws IOException {
@@ -157,9 +149,9 @@ public final class PersistentWrapper<E extends Serializable> {
     }
 
     /**
-     * Obtiene un identificador único de la clase que se desea guardar o cargar.
+     * Obtiene el identificador único de la clase que se desea guardar o cargar.
      *
-     * @return a long
+     * @return serialVersionUID de la clase.
      */
     public long getContentSerialID() {
         return ObjectStreamClass.lookup(type).getSerialVersionUID();
