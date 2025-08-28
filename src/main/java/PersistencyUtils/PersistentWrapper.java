@@ -1,4 +1,4 @@
-package persistencyutils;
+package PersistencyUtils;
 
 import java.io.*;
 
