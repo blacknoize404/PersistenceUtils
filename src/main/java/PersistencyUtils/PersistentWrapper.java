@@ -1,6 +1,8 @@
 package PersistencyUtils;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Guarda y carga datos persistentes para un tipo de objeto
@@ -41,7 +43,6 @@ public final class PersistentWrapper<E extends Serializable> {
     /**
      * Constructor para PersistentWrapper.
      *
-     * @param content  Instancia del dato a almacenar.
      * @param type     Clase del dato a almacenar.
      * @param location Dirección del archivo a guardar y/o cargar.
      */
@@ -49,6 +50,8 @@ public final class PersistentWrapper<E extends Serializable> {
         this.type = type;
         this.content = data;
         this.location = location;
+
+
     }
 
     /**
@@ -66,7 +69,6 @@ public final class PersistentWrapper<E extends Serializable> {
     /**
      * Crea una instancia de PersistentWrapper con contenido inicial.
      *
-     * @param content  Instancia del dato a almacenar.
      * @param type     Clase del dato a almacenar.
      * @param location Dirección del archivo a guardar y/o cargar.
      * @param <E>      Tipo de dato.
