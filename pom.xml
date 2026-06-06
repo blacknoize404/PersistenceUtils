@@ -3,28 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-<!--    <parent>-->
-<!--        <groupId>io.github.blacknoize404</groupId>-->
-<!--        <artifactId>GeneralUtils</artifactId>-->
-<!--        <version>1.0-SNAPSHOT</version>-->
-<!--        <relativePath>../../pom.xml</relativePath>-->
-<!--    </parent>-->
 
     <groupId>io.github.blacknoize404</groupId>
     <artifactId>PersistenceUtils</artifactId>
-    <version>0.6-RELEASE</version>
+    <version>0.7-RELEASE</version>
     <packaging>jar</packaging>
     <name>Persistence Utils</name>
     <description>Un módulo más para proveer de persistencia.</description>
     <url>https://blacknoize404.github.io</url>
-
-    <properties>
-        <project.java.version>17</project.java.version>
-        <maven.compiler.source>${project.java.version}</maven.compiler.source>
-        <maven.compiler.target>${project.java.version}</maven.compiler.target>
-        <maven.compiler.release>${project.java.version}</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <licenses>
         <license>
@@ -33,14 +19,29 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <name>Carlos Barnés</name>
-            <email>insidebarnes@gmail.com</email>
+            <email>blacknoize404@gmail.com</email>
             <organization>io.github.blacknoize404</organization>
             <organizationUrl>https://blacknoize404.github.io</organizationUrl>
         </developer>
     </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/blacknoize404/PersistenceUtils.git</connection>
+        <developerConnection>scm:git:ssh://github.com:blacknoize404/PersistenceUtils.git</developerConnection>
+        <url>https://github.com/blacknoize404/PersistenceUtils/tree/main</url>
+    </scm>
+
+    <properties>
+        <project.java.version>25</project.java.version>
+        <maven.compiler.source>${project.java.version}</maven.compiler.source>
+        <maven.compiler.target>${project.java.version}</maven.compiler.target>
+        <maven.compiler.release>${project.java.version}</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -50,6 +51,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -117,10 +119,5 @@
             </plugin>
         </plugins>
     </build>
-    <scm>
-        <connection>scm:git:git://github.com/blacknoize404/PersistenceUtils.git</connection>
-        <developerConnection>scm:git:ssh://github.com:blacknoize404/PersistenceUtils.git</developerConnection>
-        <url>http://github.com/blacknoize404/PersistenceUtils/tree/master</url>
-    </scm>
 
 </project>
