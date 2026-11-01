@@ -1,68 +1,58 @@
-# PersistenceUtils 📦
+# PersistenceUtils
 
-PersistenceUtils is a persistence module designed to simplify the serialization and deserialization of data in Java. This module provides a generic wrapper that allows you to save and load persistent objects easily, ensuring that data is stored and retrieved correctly from files. 💾✨
+> A tiny Java library for file-based persistence: a generic wrapper that serializes an object to disk
+> and loads it back with a couple of calls, checking that what comes back really is what you stored.
 
-## Key Features 🌟
+It is the library [Pingmaster](https://github.com/blacknoize404/Pingmaster) uses to keep user settings
+between runs.
 
-- **Simplified persistence** 📂: Provides easy-to-use methods (`save` and `load`) for serializing and deserializing objects.
-- **Generic type compatibility** 🔄: Uses a generic approach that works with any data type implementing the `Serializable` interface. 
-- **Class validation** ✅: Includes internal mechanisms to verify compatibility between stored data and expected classes during deserialization.
-- **Unique identification** 🔑: Provides a method to retrieve the `serialVersionUID` of the managed class, helping to ensure data integrity when working with different versions of a class.
-- **Modular and reusable design** 🧩: The module's design is clean and optimized for use in projects where data persistence is required.
+## What it does
 
-## Basic Usage 🛠️
+- **Save and load in one call.** `save()` writes the object with Java serialization; `load()` reads it
+  back and returns the wrapper itself, so calls can be chained.
+- **Generic over any `Serializable`.** `PersistentWrapper<E>` is typed on the content, so you get the
+  object back without casts.
+- **Type checking on read.** When loading, the stored bytes are checked against the expected class —
+  a file written for another type fails loudly instead of handing you garbage.
+- **`serialVersionUID` awareness.** `getContentSerialID()` exposes the UID of the wrapped class, handy
+  when migrating saved files across versions.
+- **Java module** (`module PersistenceUtils`) with no runtime dependencies.
 
-### Creating an Instance 🆕
+## Using it
+
 ```java
-// Create a wrapper to persist an object of type MyClass
-PersistentWrapper<MyClass> wrapper = PersistentWrapper.of(MyClass.class, "path/to/file.dat");
+import PersistencyUtils.PersistentWrapper;
 
-// Optionally, you can initialize it with an existing object
-MyClass myObject = new MyClass();
-PersistentWrapper<MyClass> wrapperWithData = PersistentWrapper.of(myObject, MyClass.class, "path/to/file.dat");
+// A wrapper for Settings objects, persisted to settings.dat
+PersistentWrapper<Settings> store = PersistentWrapper.of(Settings.class, "settings.dat");
+
+// Or start from an existing object
+PersistentWrapper<Settings> seeded = PersistentWrapper.of(new Settings(), Settings.class, "settings.dat");
+
+// Mutate, save, load
+seeded.setContent(currentSettings);
+seeded.save();
+
+PersistentWrapper<Settings> reloaded = seeded.load();
+Settings settings = reloaded.getContent();
 ```
 
-### Saving Data 💾
-```java
-wrapper.setContent(myObject); // Set the object to be saved
-wrapper.save(); // Serialize and save to the file
+`save()` throws `IOException`; `load()` throws `IOException` and `ClassNotFoundException`, so callers
+decide how to recover — Pingmaster, for example, falls back to default settings when the file is missing
+or incompatible.
+
+## Getting it
+
+```xml
+<dependency>
+    <groupId>io.github.blacknoize404</groupId>
+    <artifactId>PersistenceUtils</artifactId>
+    <version>0.7-RELEASE</version>
+</dependency>
 ```
 
-### Loading Data 📂
-```java
-wrapper.load(); // Deserialize and load from the file
-MyClass loadedObject = wrapper.getContent(); // Get the loaded object
-```
+On the module path: `requires PersistenceUtils;`. Requires Java 17 or newer (built for 25).
 
-### Getting the serialVersionUID 🔑
-```java
-long serialID = wrapper.getContentSerialID();
-System.out.println("SerialVersionUID: " + serialID);
-```
+## License
 
-## Main Methods 📋
-
-- 💾 `save()`: Saves the current object to the specified file.
-- 📂 `load()`: Loads the object from the specified file.
-- 🎁 `getContent()`: Retrieves the wrapped object.
-- ✍️ `setContent(E content)`: Sets a new object in the wrapper.
-- 🔑 `getContentSerialID()`: Returns the `serialVersionUID` of the object's class.
-
-## Requirements ⚙️
-
-- Java 8 ☕ or higher (compatible with the standard serialization API).
-
-## Contributions 🤝
-
-Contributions are welcome! If you find any issues, have suggestions for improvements, or want to add new features, feel free to open an issue or submit a pull request. 🚀
-
-## License 📄
-
-This project is licensed under the MIT License. 📜
-
----
-
-**Author**: Barnés Inside 👨‍💻  
-**Version**: 0.6 🆕  
-
-If you need a robust and flexible solution for handling data persistence in your Java projects, PersistenceUtils is the ideal tool! 💪✨
+Apache License 2.0.
