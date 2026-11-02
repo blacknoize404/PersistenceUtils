@@ -6,7 +6,7 @@
 
     <groupId>io.github.blacknoize404</groupId>
     <artifactId>PersistenceUtils</artifactId>
-    <version>0.7-RELEASE</version>
+    <version>0.8-RELEASE</version>
     <packaging>jar</packaging>
     <name>Persistence Utils</name>
     <description>Un módulo más para proveer de persistencia.</description>
@@ -36,7 +36,7 @@
     </scm>
 
     <properties>
-        <project.java.version>25</project.java.version>
+        <project.java.version>27</project.java.version>
         <maven.compiler.source>${project.java.version}</maven.compiler.source>
         <maven.compiler.target>${project.java.version}</maven.compiler.target>
         <maven.compiler.release>${project.java.version}</maven.compiler.release>
@@ -54,6 +54,14 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.4</version>
+                <configuration>
+                    <argLine>--enable-native-access=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

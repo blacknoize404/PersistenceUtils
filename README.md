@@ -47,11 +47,11 @@ or incompatible.
 <dependency>
     <groupId>io.github.blacknoize404</groupId>
     <artifactId>PersistenceUtils</artifactId>
-    <version>0.7-RELEASE</version>
+    <version>0.8-RELEASE</version>
 </dependency>
 ```
 
-On the module path: `requires PersistenceUtils;`. Requires Java 17 or newer (built for 25).
+On the module path: `requires PersistenceUtils;`. Requires Java 17 or newer (built for 27).
 
 ## License
 
